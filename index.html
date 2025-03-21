@@ -1,1 +1,68 @@
-Test
+<html lang="pl">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Page</title>
+
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    </head>
+
+    <div id="content">
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/13.0.1/markdown-it.min.js" integrity="sha512-SYfDUYPg5xspsG6OOpXU366G8SZsdHOhqk/icdrYJ2E/WKZxPxze7d2HD3AyXpT7U22PZ5y74xRpqZ6A2bJ+kQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script type="module">
+        import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+
+        function extractMeta(data) {
+            const commentBlock = '---';
+            let firstComment = data.indexOf(commentBlock);
+            let secondComment = data.indexOf(commentBlock, firstComment + 1);
+
+            let multilineString = data.substring(firstComment+3, secondComment).trim();
+
+            let lines = multilineString.split('\n');
+            let body = lines
+                .map(line => {
+                    let commaPosition = line.indexOf(':');
+                    let key = line.substring(0, commaPosition);
+                    let value = line.substring(commaPosition, line.length).replaceAll("'", "\"");
+                    return '"' + key + '" ' + value;
+                })
+                .map((line, index) => index < lines.length - 1 ? line.trim() + ',' : line.trim())
+                .join('\n');
+
+            return JSON.parse('{' + body + '}');
+        }
+
+        function extractBody(data) {
+            const commentBlock = '---';
+            let secondComment = data.indexOf(commentBlock, data.indexOf(commentBlock) + 1);
+            return data.substring(secondComment+3);
+
+        }
+        
+        fetch('http://127.0.0.1:8080/test.md',{mode: 'no-cors'})
+        .then(response => response.text())
+        .then(data => {
+            // document.getElementById('content').innerHTML = marked.parse(data);
+            // console.log(data)
+
+            let meta = extractMeta(data);
+
+            console.log(meta);
+
+            let body = extractBody(data);
+
+            console.log(body);
+            
+            var md = window.markdownit();
+            document.getElementById('content').innerHTML = md.render(body);
+        });
+        
+      </script>
+</html>
