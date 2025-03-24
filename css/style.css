@@ -1,0 +1,26 @@
+.icon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.border-right {
+    border-right: 2px solid #337ab7;
+    margin-right: 16px;
+}
+
+.nav-tabs.no-border {
+    border: transparent;
+    cursor: pointer;
+
+    > li.active, li.active:hover, li, li:hover {
+        padding: 0 15px;
+        > a {
+            padding: 10px 0;
+            border: transparent;
+            border-radius: 0;
+            background-color: white;
+        }
+    }
+}
