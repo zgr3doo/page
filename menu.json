@@ -1,7 +1,7 @@
-{
-    "Learning": "",
-    "Projects": "",
-    "Workshops": "",
-    "Certificates": "",
-    "Events": ""
-}
+[
+    {"key": "Learning", "url": "1"},
+    {"key": "Projects", "url": "2"},
+    {"key":"Workshops", "url": "3"},
+    {"key":"Certificates", "url": "4"},
+    {"key":"Events", "url": "5"}
+]

@@ -1,5 +1,8 @@
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
+// const prefix = '/page';
+const prefix = '';
+
 function extractMeta(data) {
     const commentBlock = '---';
     let firstComment = data.indexOf(commentBlock);
@@ -32,19 +35,17 @@ window.addEventListener('load', function(event) {
     fetch('https://raw.githubusercontent.com/zgr3doo/page/refs/heads/main/test.md')
     .then(response => response.text())
     .then(data => {
-        // document.getElementById('content').innerHTML = marked.parse(data);
-        // console.log(data)
-
         let meta = extractMeta(data);
-
-        console.log(meta);
-
         let body = extractBody(data);
-
-        console.log(body);
-        
         var md = window.markdownit();
         document.getElementById('page-content').innerHTML = md.render(body);
+    });
+
+    fetch(prefix + '/menu.json')
+    .then(response => response.json())
+    .then(data => {
+        let menu = data.map(element => '<li><a href="/beta?page=' + element.url + '">' + element.key + '</a></li>').join('\n');
+        document.getElementById('menu').innerHTML = '<li class="active"><a>View All</a></li>\n' + menu;
     });
 
 
