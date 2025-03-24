@@ -1,7 +1,7 @@
 import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
 
-// const prefix = '/page';
-const prefix = '';
+const prefix = '/page';
+// const prefix = '';
 
 function extractMeta(data) {
     const commentBlock = '---';
