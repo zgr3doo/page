@@ -44,7 +44,7 @@ window.addEventListener('load', function(event) {
     fetch(prefix + '/menu.json')
     .then(response => response.json())
     .then(data => {
-        let menu = data.map(element => '<li><a href="/beta?page=' + element.url + '">' + element.key + '</a></li>').join('\n');
+        let menu = data.map(element => '<li><a href="' + prefix + '/beta?page=' + element.url + '">' + element.key + '</a></li>').join('\n');
         document.getElementById('menu').innerHTML = '<li class="active"><a>View All</a></li>\n' + menu;
     });
 
